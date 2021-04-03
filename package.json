@@ -2,10 +2,26 @@
     "name": "nodehun-api-express",
     "version": "0.1.0",
     "description": "Simple ExpressJS API to interact with nodehun module (Hunspell based)",
+    "homepage": "https://github.com/imigueldiaz/nodehun-api-express",
+    "bugs": {
+        "url": "https://github.com/imigueldiaz/nodehun-api-express/issues",
+        "email": "imigueldiaz@gmail.com"
+    },
     "main": "index.js",
-    "author": "Ignacio de Miguel Diaz",
-    "email": "imigueldiaz@gmail.com",
-    "license": "GPLv3",
+    "author": {
+        "name": "Iñaki de Miguel Diaz",
+        "email": "imigueldiaz@gmail.com",
+        "url": "https://linktr.ee/imigueldiaz"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/imigueldiaz/nodehun-api-express.git"
+    },
+    "scripts": {
+        "start": "node ./index.js"
+    },
+
+    "license": "GPL-3.0-or-later",
     "private": true,
     "dependencies": {
         "dictionary-es": "^3.1.0",
