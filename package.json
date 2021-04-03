@@ -1,24 +1,21 @@
 {
-  "name": "nodehun-api-express",
-  "version": "0.1.0",
-  "description": "Simple ExpressJS API to interact with nodehun module (Hunspell based)",
-  "main": "index.js",
-  "author": "Ignacio de Miguel Diaz",
-  "license": "GPLv3",
-  "private": true,
-  "dependencies": {
-    "dictionary-es": "^3.1.0",
-    "express": "^4.17.1",
-    "node-addon-api": "^3.1.0",
-    "nodehun": "^3.0.2",
-    "require-resolve": "^0.0.2"
-  },
-  "devDependencies": {
-    "@types/mocha": "^8.2.2",
-    "@types/node": "^14.14.37",
-    "bindings": "^1.5.0",
-    "mocha": "^8.3.2",
-    "ts-node": "^9.1.1",
-    "typescript": "^4.2.3"
-  }
+    "name": "nodehun-api-express",
+    "version": "0.1.0",
+    "description": "Simple ExpressJS API to interact with nodehun module (Hunspell based)",
+    "main": "index.js",
+    "author": "Ignacio de Miguel Diaz",
+    "email": "imigueldiaz@gmail.com",
+    "license": "GPLv3",
+    "private": true,
+    "dependencies": {
+        "dictionary-es": "^3.1.0",
+        "express": "^4.17.1",
+        "nodehun": "^3.0.2"
+    },
+    "devDependencies": {
+        "@types/mocha": "^8.2.2",
+        "@types/node": "^14.14.37",
+        "bindings": "^1.5.0",
+        "mocha": "^8.3.2"
+    }
 }
