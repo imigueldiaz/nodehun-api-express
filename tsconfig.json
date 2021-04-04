@@ -2,7 +2,9 @@
   "extends": "@tsconfig/node14/tsconfig.json",
   "compilerOptions": {
     "preserveConstEnums": true,
-    "outDir": "./build"
+    "outDir": "./build",
+    "declaration": true,
+    "declarationMap": true
   },
   "include": ["src/**/*"],
 }

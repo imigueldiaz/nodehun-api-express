@@ -33,7 +33,7 @@ export class AnalizedItem {
 }
 
 // rest of the code remains same
-export const Api = express();
+const Api = express();
 const PORT = 3000;
 Api.get("/:words", async (req, res) => {
   try {
@@ -70,6 +70,6 @@ async function analyze(word: string) {
   return await nodehun.analyze(word).then((result) => result);
 }
 
-Api.listen(PORT, () => {
+export const ApiServer = Api.listen(PORT, () => {
   console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`);
 });
