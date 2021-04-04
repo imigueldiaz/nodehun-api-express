@@ -1,7 +1,7 @@
 import express from "express";
 import fs from "fs";
-import path from "path";
 import { Nodehun } from "nodehun";
+import path from "path";
 
 var base = path.dirname(require.resolve("dictionary-es"));
 
@@ -16,9 +16,10 @@ export class OrderedWord {
 
   constructor(theId: number, theWord: string) {
     this.id = theId;
-    this.word = theWord
-      .trim()
-      .replace(/[^A-Za-z\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff]/gi, "");
+    this.word = theWord.replace(
+      /[^A-Za-z\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff]/gi,
+      ""
+    );
   }
 }
 
@@ -32,32 +33,15 @@ export class AnalizedItem {
   }
 }
 
-// rest of the code remains same
 const Api = express();
 const PORT = 3000;
 Api.get("/:words", async (req, res) => {
   try {
-    //console.log(`Received from browser: ${req.params.words}`);
     let words = req.params.words.split(" ").map((item) => item);
 
-    let orderedWords = new Array<OrderedWord>();
-    let indexWord = 0;
+    let orderedWords = obtainListOfWords(words);
 
-    for (const word of words) {
-      orderedWords.push(new OrderedWord(indexWord, word));
-      indexWord++;
-    }
-
-    let response = new Array<AnalizedItem>();
-
-    await Promise.all(
-      orderedWords.map(async (item) => {
-        let result = await analyze(item.word);
-        response.push(new AnalizedItem(item, result));
-      })
-    );
-
-    response.sort((a, b) => a.orderedWord.id - b.orderedWord.id);
+    let response = await obtainResponse(orderedWords);
 
     console.table(response);
     res.send(response);
@@ -65,6 +49,29 @@ Api.get("/:words", async (req, res) => {
     res.send(e);
   }
 });
+
+async function obtainResponse(orderedWords: OrderedWord[]) {
+  let response = new Array<AnalizedItem>();
+
+  await Promise.all(
+    orderedWords.map(async (item) => {
+      let result = await analyze(item.word);
+      response.push(new AnalizedItem(item, result));
+    })
+  );
+
+  response.sort((a, b) => a.orderedWord.id - b.orderedWord.id);
+  return response;
+}
+
+function obtainListOfWords(words: string[]) {
+  let orderedWords = new Array<OrderedWord>();
+
+  for (var [key, value] of Object.entries(words)) {
+    orderedWords.push(new OrderedWord(parseInt(key), value));
+  }
+  return orderedWords;
+}
 
 async function analyze(word: string) {
   return await nodehun.analyze(word).then((result) => result);
