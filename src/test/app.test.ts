@@ -1,5 +1,5 @@
 import supertest from "supertest";
-import { ApiServer } from "./app";
+import { ApiServer } from "../app";
 
 describe("GET /", function () {
   this.timeout("10000");

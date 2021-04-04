@@ -2,10 +2,11 @@
   "extends": "@tsconfig/node14/tsconfig.json",
   "compilerOptions": {
     "preserveConstEnums": true,
-    "outDir": "./build",
+    "outDir": "./test",
     "declaration": true,
-    "declarationMap": true
+    "declarationMap": true,
   },
-  "include": ["src/**/*"],
-  "exclude": ["src/test/*"],
+  "exclude": ["./src/**/*"],
+  "files": ["./src/test/app.test.ts"]
+
 }
