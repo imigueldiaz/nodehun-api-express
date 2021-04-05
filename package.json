@@ -23,7 +23,7 @@
         "prestart": "yarn build",
         "start": "node ./build/app.js",
         "pretest": "yarn build-all",
-        "test": "npx mocha ./test/test/app.test.js",
+        "test": "npx mocha ./test/test/*.js",
         "build": "npx tsc -p tsconfig.json",
         "build-test": "npx tsc -p tsconfig.test.json",
         "build-all": "yarn build && yarn build-test",

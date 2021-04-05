@@ -3,8 +3,8 @@
   "compilerOptions": {
     "preserveConstEnums": true,
     "outDir": "./test",
-    "declaration": true,
-    "declarationMap": true,
+    "declaration": false,
+    "declarationMap": false,
   },
   "exclude": ["./src/**/*"],
   "files": ["./src/test/app.test.ts"]
