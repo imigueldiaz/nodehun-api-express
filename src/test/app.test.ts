@@ -1,4 +1,4 @@
-import { OrderedWord } from "./../app";
+import { OrderedWord } from "./../lib/business";
 import supertest from "supertest";
 import { ApiServer } from "../app";
 import { assert } from "chai";
