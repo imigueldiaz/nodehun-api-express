@@ -3,8 +3,12 @@ import fs from "fs";
 import { Nodehun } from "nodehun";
 import path from "path";
 import compression from "compression";
+import Logger from "./lib/logger";
+import morganMiddleware from './config/morganMiddleware'
 
 var base = path.dirname(require.resolve("dictionary-es"));
+
+require('dotenv').config()
 
 const nodehun = new Nodehun(
   fs.readFileSync(path.join(base, "index.aff")),
@@ -37,6 +41,7 @@ export class AnalizedItem {
 const Api = express();
 const PORT = 3000;
 
+Api.use(morganMiddleware)
 Api.use(compression({ filter: shouldCompress }));
 
 function shouldCompress(req: express.Request, res: express.Response) {
@@ -57,10 +62,12 @@ Api.get("/:words", async (req, res) => {
 
     let response = await obtainResponse(orderedWords);
 
-    console.table(response);
     res.send(response);
-  } catch (e) {
-    res.send(e);
+  } catch (err) {
+    res.statusCode = 500;
+    res.setHeader("Content-Type", "text/plain");
+    Logger.error(err.stack);
+    res.end("An exception occurred");
   }
 });
 

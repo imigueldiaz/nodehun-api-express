@@ -34,11 +34,15 @@
         "./test"
     ],
     "dependencies": {
+        "@types/morgan": "^1.9.2",
         "chai": "^4.3.4",
         "compression": "^1.7.4",
         "dictionary-es": "^3.1.0",
+        "dotenv": "^8.2.0",
         "express": "^4.17.1",
-        "nodehun": "^3.0.2"
+        "morgan": "^1.10.0",
+        "nodehun": "^3.0.2",
+        "winston": "^3.3.3"
     },
     "devDependencies": {
         "@tsconfig/node14": "^1.0.0",
