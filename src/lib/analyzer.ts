@@ -13,16 +13,17 @@ const nodehun = new Nodehun(
 export class HunspellAnalizer {
   orderedWords: Array<OrderedWord>;
   analizedItems: Array<AnalizedItem>;
-  text: string;
+  text: Buffer;
 
-  constructor(myText: string) {
+  constructor(myText: Buffer) {
     this.orderedWords = new Array<OrderedWord>();
     this.analizedItems = new Array<AnalizedItem>();
     this.text = myText;
   }
 
   public async hunspellize(): Promise<AnalizedItem[]> {
-    let words = this.text.split(" ").map((item: string) => item);
+    let body = this.text.toString("utf-8");
+    let words = body.split(" ").map((item: string) => item);
 
     let orderedWords = this.obtainListOfWords(words);
 

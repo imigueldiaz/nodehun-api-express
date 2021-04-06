@@ -10,6 +10,7 @@ const PORT = 3000;
 
 Api.use(morganMiddleware);
 Api.use(compression({ filter: shouldCompress }));
+Api.use(express.raw({ inflate: true, limit: "100kb", type: "text/plain" }));
 
 function shouldCompress(req: express.Request, res: express.Response) {
   if (req.headers["x-no-compression"]) {
@@ -21,8 +22,13 @@ function shouldCompress(req: express.Request, res: express.Response) {
   return compression.filter(req, res);
 }
 
-Api.get("/:words", async (req, res) => {
-  const analyzer = new HunspellAnalizer(req.params.words);
+Api.post("/analyze", async (req, res) => {
+  if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
+    res.status(204).end();
+    return;
+  }
+
+  const analyzer = new HunspellAnalizer(req.body);
 
   const response = await analyzer.hunspellize();
 
@@ -37,5 +43,5 @@ Api.get("/:words", async (req, res) => {
 });
 
 export const ApiServer = Api.listen(PORT, () => {
-  console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`);
+  Logger.info(`⚡️[server]: Server is running at https://localhost:${PORT}`);
 });

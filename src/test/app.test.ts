@@ -1,29 +1,36 @@
 import { OrderedWord } from "./../lib/business";
 import supertest from "supertest";
 import { ApiServer } from "../app";
-import { assert } from "chai";
+import { assert, expect } from "chai";
 
-describe("GET /", function () {
-  this.timeout("10000");
+const testData = "Esta es una frase para las pruebas";
 
+describe("POST /analyze", function () {
   after((done) => {
     ApiServer.close(done);
   });
 
   it("it should have status code 200.", async () => {
-    return await supertest(ApiServer).get("/test").expect(200);
+    return await await supertest(ApiServer)
+      .post("/analyze")
+      .set("Content-type", "text/plain")
+      .send(testData)
+      .expect(200);
   });
 
   it("it should respond with JSON.", async () => {
     return await supertest(ApiServer)
-      .get("/test")
+      .post("/analyze")
+      .set("Content-type", "text/plain")
+      .send(testData)
       .expect("Content-Type", /json/);
   });
 
   it("it should be an array", async () => {
     return await supertest(ApiServer)
-      .get("/test")
-      .expect("Content-Type", /json/)
+      .post("/analyze")
+      .set("Content-type", "text/plain")
+      .send(testData)
       .expect((res) => {
         assert.isArray(res.body);
       });
@@ -31,15 +38,18 @@ describe("GET /", function () {
 
   it("it should contain an OrderedWord whith the same id and word.", async () => {
     return await supertest(ApiServer)
-      .get("/test")
-      .expect("Content-Type", /json/)
+      .post("/analyze")
+      .set("Content-type", "text/plain")
+      .send(testData)
       .expect((res) => {
         let list = res.body;
 
-        assert.notStrictEqual(
-          new OrderedWord(0, "test"),
-          new OrderedWord(list[0].orderedWord.id, list[0].orderedWord.word)
+        expect(new OrderedWord(0, "Esta")).to.be.deep.equal(
+          <OrderedWord>list[0].orderedWord
         );
       });
+  });
+  it("Response should be empty with status 204 (No content).", async () => {
+    return await supertest(ApiServer).post("/analyze").expect(204);
   });
 });
